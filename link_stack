@@ -1,0 +1,66 @@
+#include<iostream>
+#define elementype char
+using namespace std;
+struct node {
+	elementype date;
+	node* next;
+};
+class stack {
+public:
+	stack();
+	~stack();
+	void pop();//出栈
+	void push(elementype& x);//入栈
+	elementype get_top();//取栈头
+	bool empty(); //判断栈是否为空
+	bool full();  //判断栈是否为满
+	void show();   //输出栈中元素    
+	node* return_front();
+private:
+	node* front;
+	int count;
+};
+stack::stack() {
+	front = new node;
+	count = 0;
+}
+bool stack::empty() {
+	return count == 0;
+}
+bool stack::full() {
+	return false;
+}
+stack::~stack() {
+	while (!empty())
+		pop();
+}
+void stack::pop() {
+	node* p = front->next;
+	front->next = p->next;
+	delete p;
+	count--;
+}
+void stack::push(elementype& x) {
+	node* q = new node;
+	q->date = x;
+	q->next = front->next;
+	front->next = q;
+	count++;
+}
+elementype stack::get_top() {
+	elementype s;
+	s = front->next->date;
+	return s;
+}
+void stack::show() {
+	node* a = front->next;
+	int e = count;
+	while (e != 0) {
+		cout << a->date << " ";
+		a = a->next;
+		e--;
+	}
+}
+node* stack::return_front() {
+	return front;
+}
